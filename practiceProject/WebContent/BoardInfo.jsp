@@ -4,10 +4,6 @@
 	pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-</head>
 <body>
 	<%
 		int num = Integer.parseInt(request.getParameter("num").trim());
@@ -28,7 +24,7 @@
 				<td align="center" width="120">작성자</td>
 				<td align="center" width="120"><%=bean.getWriter()%></td>
 				<td align="center" width="120">작성일</td>
-				<td align="center" width="120"><%=bean.getReg_date()%></td>
+				<td align="center" width="120"><%=bean.getRegDate()%></td>
 			</tr>
 			<tr height="40">
 				<td align="center" width="120">이메일</td>

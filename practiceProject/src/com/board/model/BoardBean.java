@@ -42,10 +42,10 @@ public class BoardBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getReg_date() {
+	public String getRegDate() {
 		return reg_date;
 	}
-	public void setReg_date(String reg_date) {
+	public void setRegDate(String reg_date) {
 		this.reg_date = reg_date;
 	}
 	public int getRef() {

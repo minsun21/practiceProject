@@ -68,27 +68,29 @@ public class BoardDAO {
 		}
 	}
 
-	public List<BoardBean> allSelect() {
+	public List<BoardBean> allSelect(int startRow, int endRow) {
 		List<BoardBean> list = new ArrayList<BoardBean>();
 		getConnection();
 		try {
-			String sql = "SELECT * FROM BOARD ORDER BY REF DESC, RE_STEP ASC";
+			String sql = "SELECT * FROM (SELECT Row_Number() OVER (ORDER BY REF DESC, RE_STEP ASC) AS rownum, *FROM BOARD) T1 WHERE rownum BETWEEN ? AND ?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				BoardBean bean = new BoardBean();
-				bean.setNum(rs.getInt(1));
-				bean.setWriter(rs.getString(2));
-				bean.setEmail(rs.getString(3));
-				bean.setSubject(rs.getString(4));
-				bean.setPassword(rs.getString(5));
-				bean.setReg_date(rs.getDate(6).toString());
-				bean.setRef(rs.getInt(7));
-				bean.setReStep(rs.getInt(8));
-				bean.setReLevel(rs.getInt(9));
-				bean.setReadCount(rs.getInt(10));
-				bean.setContent(rs.getString(11));
+				bean.setNum(rs.getInt(2));
+				bean.setWriter(rs.getString(3));
+				bean.setEmail(rs.getString(4));
+				bean.setSubject(rs.getString(5));
+				bean.setPassword(rs.getString(6));
+				bean.setRegDate(rs.getDate(7).toString());
+				bean.setRef(rs.getInt(8));
+				bean.setReStep(rs.getInt(9));
+				bean.setReLevel(rs.getInt(10));
+				bean.setReadCount(rs.getInt(11));
+				bean.setContent(rs.getString(12));
 				list.add(bean);
 			}
 		} catch (SQLException e) {
@@ -124,7 +126,7 @@ public class BoardDAO {
 				bean.setEmail(rs.getString(3));
 				bean.setSubject(rs.getString(4));
 				bean.setPassword(rs.getString(5));
-				bean.setReg_date(rs.getDate(6).toString());
+				bean.setRegDate(rs.getDate(6).toString());
 				bean.setRef(rs.getInt(7));
 				bean.setReStep(rs.getInt(8));
 				bean.setReLevel(rs.getInt(9));
@@ -156,7 +158,6 @@ public class BoardDAO {
 			pstmt.setInt(2, reLevel);
 			pstmt.executeUpdate();
 
-		
 			// 답변글 데이터 저장
 			String insertSql = "INSERT INTO BOARD VALUES(?,?,?,?,GETDATE(),?,?,?,0,?)";
 			pstmt = con.prepareStatement(insertSql);
@@ -165,9 +166,9 @@ public class BoardDAO {
 			pstmt.setString(3, bean.getSubject());
 			pstmt.setString(4, bean.getPassword());
 			pstmt.setInt(5, ref);
-			//부모 글 RE_STEP에 1을 더해 줌
-			pstmt.setInt(6, reStep+1);
-			pstmt.setInt(7, reLevel+1);
+			// 부모 글 RE_STEP에 1을 더해 줌
+			pstmt.setInt(6, reStep + 1);
+			pstmt.setInt(7, reLevel + 1);
 			pstmt.setString(8, bean.getContent());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -179,5 +180,123 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	// BoardUpdate, BoardDelete
+	public BoardBean getOneUpdateBoard(int num) {
+		BoardBean bean = new BoardBean();
+		getConnection();
+		try {
+			String sql = "SELECT * FROM BOARD WHERE num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				bean.setNum(rs.getInt(1));
+				bean.setWriter(rs.getString(2));
+				bean.setEmail(rs.getString(3));
+				bean.setSubject(rs.getString(4));
+				bean.setPassword(rs.getString(5));
+				bean.setRegDate(rs.getDate(6).toString());
+				bean.setRef(rs.getInt(7));
+				bean.setReStep(rs.getInt(8));
+				bean.setReLevel(rs.getInt(9));
+				bean.setReadCount(rs.getInt(10));
+				bean.setContent(rs.getString(11));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return bean;
+	}
+
+	public String getPassword(int num) {
+		getConnection();
+		String password = "";
+		try {
+			String sql = "SELECT PASSWORD FROM BOARD WHERE num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				password = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return password;
+	}
+
+	public void updateBoard(BoardBean bean) {
+		getConnection();
+		try {
+			String sql = "UPDATE BOARD SET SUBJECT =?,CONTENT=? WHERE NUM=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bean.getSubject());
+			pstmt.setString(2, bean.getContent());
+			pstmt.setInt(3, bean.getNum());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void deleteBoard(int num) {
+		getConnection();
+		try {
+			String sql = "DELETE FROM BOARD WHERE NUM=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public int getAllListCount() {
+		getConnection();
+		int count = 0;
+		try {
+			String sql = "SELECT COUNT(*) FROM BOARD";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
 	}
 }

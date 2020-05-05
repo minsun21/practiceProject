@@ -7,16 +7,28 @@
 	<%
 		request.setCharacterEncoding("euc-kr");
 	%>
+
 	<jsp:useBean id="bean" class="com.board.model.BoardBean">
 		<jsp:setProperty name="bean" property="*" />
 	</jsp:useBean>
 
 	<%
 		BoardDAO dao = new BoardDAO();
-		dao.insertBoard(bean);
-
-		// 게시글 저장 후 전체 글 목록 보기
-		response.sendRedirect("BoardList.jsp");
+		String password = dao.getPassword(bean.getNum());
+		
+		// 기존 pass값과 비교
+		if(bean.getPassword().equals(password)){
+			dao.updateBoard(bean);
+			
+			response.sendRedirect("BoardList.jsp");
+		}else{
+		%>
+		<script type="text/javascript">
+			alert("패스워드가 일치하지 않음");
+			history.go(-1);
+		</script>
+	<%	
+		}
 	%>
 </body>
 </html>
