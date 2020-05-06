@@ -1,6 +1,6 @@
 package com.board.model.bean;
 
-public class CarListBean {
+public class CarBean {
 	private int no;
 	private String name;
 	private int category;
