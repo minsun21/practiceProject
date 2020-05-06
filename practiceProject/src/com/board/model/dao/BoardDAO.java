@@ -1,4 +1,4 @@
-package com.board.model;
+package com.board.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +11,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+
+import com.board.model.bean.BoardBean;
 
 public class BoardDAO {
 	Connection con;

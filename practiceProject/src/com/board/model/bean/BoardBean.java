@@ -1,4 +1,4 @@
-package com.board.model;
+package com.board.model.bean;
 
 public class BoardBean {
 	private int num;

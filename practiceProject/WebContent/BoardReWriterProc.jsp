@@ -1,4 +1,4 @@
-<%@page import="com.board.model.BoardDAO"%>
+<%@page import="com.board.model.dao.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,7 +8,7 @@
 		request.setCharacterEncoding("euc-kr");
 	%>
 	<!-- 데이터를 한번에 받아오는 빈클래스를 사용함 -->
-	<jsp:useBean id="bean" class="com.board.model.BoardBean">
+	<jsp:useBean id="bean" class="com.board.model.bean.BoardBean">
 		<jsp:setProperty name="bean" property="*" />
 	</jsp:useBean>
 
