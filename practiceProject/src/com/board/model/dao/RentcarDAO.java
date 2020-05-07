@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+
+import com.board.model.bean.CarBean;
 
 public class RentcarDAO {
 	Connection con;
@@ -27,10 +30,44 @@ public class RentcarDAO {
 		} catch (NamingException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	public ArrayList<CarBean> getSelectCarInfo() {
+		ArrayList<CarBean> carList = new ArrayList<CarBean>();
+		getConnection();
+		try {
+			String sql = "SELECT * FROM RENTCAR_INFO ORDER BY No DESC";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			int count = 0;
+			while (rs.next()) {
+				CarBean carBean = new CarBean();
+				carBean.setNo(rs.getInt(1));
+				carBean.setName(rs.getString(2));
+				carBean.setCategory(rs.getInt(3));
+				carBean.setPrice(rs.getInt(4));
+				carBean.setUsePeople(rs.getInt(5));
+				carBean.setCompany(rs.getString(6));
+				carBean.setImg(rs.getString(7));
+				carBean.setInfo(rs.getString(8));
+				count++;
+				carList.add(carBean);
+				if (count > 2)
+					break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return carList;
 	}
 
 }

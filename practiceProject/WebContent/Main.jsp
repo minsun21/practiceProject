@@ -11,19 +11,21 @@
 			center = "Center.jsp";
 		}
 	%>
-	<table width="1000">
-		<!-- TOP -->
-		<tr height="130" align="center">
-			<td align="center" width="1000"><jsp:include page="Top.jsp" /></td>
-		</tr>
-		<!-- CENTER -->
-		<tr align="center">
-			<td align="center" width="1000"><jsp:include page="<%=center%>" /></td>
-		</tr>
-		<!-- BOTTOM -->
-		<tr height="100" align="center">
-			<td align="center" width="1000"><jsp:include page="Bottom.jsp" /></td>
-		</tr>
-	</table>
+	<center>
+		<table width="1000">
+			<!-- TOP -->
+			<tr height="130" align="center">
+				<td align="center" width="1000"><jsp:include page="Top.jsp" /></td>
+			</tr>
+			<!-- CENTER -->
+			<tr align="center">
+				<td align="center" width="1000"><jsp:include page="<%=center%>" /></td>
+			</tr>
+			<!-- BOTTOM -->
+			<tr height="100" align="center">
+				<td align="center" width="1000"><jsp:include page="Bottom.jsp" /></td>
+			</tr>
+		</table>
+	</center>
 </body>
 </html>

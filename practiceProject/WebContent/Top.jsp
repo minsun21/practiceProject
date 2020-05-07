@@ -20,7 +20,7 @@
 		</tr>
 		<tr height="50">
 			<td align="center" width="200" bgcolor="red">
-				<font color="white" size="4"><a href="#" style="text-decoration:none">예 약 하 기</a></font>
+				<font color="white" size="4"><a href="Main.jsp?center=CarReserveMain.jsp" style="text-decoration:none">예 약 하 기</a></font>
 			</td>
 			<td align="center" width="200" bgcolor="red">
 				<font color="white" size="4"><a href="#" style="text-decoration:none">예 약 확 인</a></font>
