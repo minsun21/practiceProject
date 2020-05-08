@@ -69,5 +69,62 @@ public class RentcarDAO {
 		}
 		return carList;
 	}
-
+	// 소형,중형, 대형 분류에 따라 리스트 리턴
+	public ArrayList<CarBean>getCategoryCarList(int category){
+		ArrayList<CarBean> carList = new ArrayList<CarBean>();
+		getConnection();
+		try {
+			String sql = "SELECT * FROM RENTCAR_INFO WHERE CATEGORY=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,category);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				CarBean carBean = new CarBean();
+				carBean.setNo(rs.getInt(1));
+				carBean.setName(rs.getString(2));
+				carBean.setCategory(rs.getInt(3));
+				carBean.setPrice(rs.getInt(4));
+				carBean.setUsePeople(rs.getInt(5));
+				carBean.setCompany(rs.getString(6));
+				carBean.setImg(rs.getString(7));
+				carBean.setInfo(rs.getString(8));
+				carList.add(carBean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return carList;
+	}
+	
+	// 전체 차량 리스트 리턴
+	public ArrayList<CarBean> getAllCarList(){
+		getConnection();
+		ArrayList<CarBean> allCarList = new ArrayList<CarBean>();
+		String sql = "SELECT * FROM RENTCAR_INFO";
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				CarBean carBean = new CarBean();
+				carBean.setNo(rs.getInt(1));
+				carBean.setName(rs.getString(2));
+				carBean.setCategory(rs.getInt(3));
+				carBean.setPrice(rs.getInt(4));
+				carBean.setUsePeople(rs.getInt(5));
+				carBean.setCompany(rs.getString(6));
+				carBean.setImg(rs.getString(7));
+				carBean.setInfo(rs.getString(8));
+				allCarList.add(carBean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allCarList;
+	}
 }

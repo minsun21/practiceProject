@@ -14,7 +14,10 @@
 	%>
 	<table width="1000">
 		<tr height="80">
-			<td colspan="4"><img alt="" src="Img/RENT_LOGO.png" height="65">
+			<td colspan="4">
+				<a href="Main.jsp">
+					<img alt="" src="Img/RENT_LOGO.png" height="65">
+				</a>
 			</td>
 			<td align="center" width="200"><%=id %>님 반갑습니다.</td>
 		</tr>
@@ -23,7 +26,7 @@
 				<font color="white" size="4"><a href="Main.jsp?center=CarReserveMain.jsp" style="text-decoration:none">예 약 하 기</a></font>
 			</td>
 			<td align="center" width="200" bgcolor="red">
-				<font color="white" size="4"><a href="#" style="text-decoration:none">예 약 확 인</a></font>
+				<font color="white" size="4"><a href="Main.jsp?center=CarAllList.jsp" style="text-decoration:none">예 약 확 인</a></font>
 			</td>
 			<td align="center" width="200" bgcolor="red">
 				<font color="white" size="4"><a href="#" style="text-decoration:none">자유게시판</a></font>
