@@ -25,7 +25,7 @@
 						CarBean bean = carList.get(i);
 				%>
 				<td width="333" align="center"><a
-					href="CarReserveInfo.jsp?no=<%=bean.getNo()%>"> <img alt=""
+					href="Main.jsp?center=CarReserveInfo.jsp?no=<%=bean.getNo()%>"> <img alt=""
 						src="Img/<%=bean.getImg()%>" width="270" height="220">
 				</a>
 					<p>

@@ -14,29 +14,35 @@
 	%>
 	<table width="1000">
 		<tr height="80">
-			<td colspan="4">
-				<a href="Main.jsp">
-					<img alt="" src="Img/RENT_LOGO.png" height="65">
-				</a>
+			<td colspan="4"><a href="Main.jsp"> <img alt=""
+					src="Img/RENT_LOGO.png" height="65">
+			</a></td>
+			<td align="center" width="400"><%=id %>님 반갑습니다.
+			<%
+				if(id.equals("GUEST")){
+				%>
+			<button onclick="location.href='Main.jsp?center=Login.jsp'">로그인</button>
+			<%
+				} 
+			%>
 			</td>
-			<td align="center" width="200"><%=id %>님 반갑습니다.</td>
 		</tr>
 		<tr height="50">
-			<td align="center" width="200" bgcolor="red">
-				<font color="white" size="4"><a href="Main.jsp?center=CarReserveMain.jsp" style="text-decoration:none">예 약 하 기</a></font>
+			<td align="center" width="200" bgcolor="red"><font color="white"
+				size="4"><a href="Main.jsp?center=CarReserveMain.jsp"
+					style="text-decoration: none">예 약 하 기</a></font></td>
+			<td align="center" width="200" bgcolor="red"><font color="white"
+				size="4"><a href="Main.jsp?center=CarAllList.jsp"
+					style="text-decoration: none">예 약 확 인</a></font></td>
+			<td align="center" width="200" bgcolor="red"><font color="white"
+				size="4"><a href="#" style="text-decoration: none">자유게시판</a></font>
 			</td>
-			<td align="center" width="200" bgcolor="red">
-				<font color="white" size="4"><a href="Main.jsp?center=CarAllList.jsp" style="text-decoration:none">예 약 확 인</a></font>
+			<td align="center" width="200" bgcolor="red"><font color="white"
+				size="4"><a href="#" style="text-decoration: none">이 벤 트</a></font>
 			</td>
-			<td align="center" width="200" bgcolor="red">
-				<font color="white" size="4"><a href="#" style="text-decoration:none">자유게시판</a></font>
-			</td>
-			<td align="center" width="200" bgcolor="red">
-				<font color="white" size="4"><a href="#" style="text-decoration:none">이 벤 트</a></font>
-			</td>
-			<td align="center" width="200" bgcolor="red">
-				<font color="white" size="4"><a href="#" style="text-decoration:none">고 객 센 터</a></font>
-			</td>
+			<td align="center" width="200" bgcolor="red"><font color="white"
+				size="4"><a href="#" style="text-decoration: none">고 객 센
+						터</a></font></td>
 		</tr>
 	</table>
 </body>
