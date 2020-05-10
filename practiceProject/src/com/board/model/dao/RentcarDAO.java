@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,6 +14,8 @@ import javax.naming.NamingException;
 import org.apache.tomcat.jdbc.pool.DataSource;
 
 import com.board.model.bean.CarBean;
+import com.board.model.bean.ReserveBean;
+import com.board.model.bean.ReserveCarViewBean;
 
 public class RentcarDAO {
 	Connection con;
@@ -156,9 +159,9 @@ public class RentcarDAO {
 		}
 		return carBean;
 	}
-	
+
 	public int getMember(String id, String pass) throws SQLException {
-		int result=0;
+		int result = 0;
 		getConnection();
 		try {
 			String sql = "SELECT COUNT(*) FROM MEMBER WHERE ID=? AND PASS1=?";
@@ -166,7 +169,7 @@ public class RentcarDAO {
 			pstmt.setString(1, id);
 			pstmt.setString(2, pass);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				result = rs.getInt(1);
 			}
 		} catch (Exception e) {
@@ -175,5 +178,73 @@ public class RentcarDAO {
 			con.close();
 		}
 		return result;
+	}
+
+	public void setReserveCar(ReserveBean bean) throws SQLException {
+		getConnection();
+		try {
+			String sql = "INSERT INTO CAR_RESERVE_INFO VALUES(?,?,?,?,?,?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bean.getNo());
+			pstmt.setInt(2, bean.getQty());
+			pstmt.setInt(3, bean.getdDay());
+			pstmt.setString(4, bean.getrDay());
+			pstmt.setInt(5, bean.getUseIn());
+			pstmt.setInt(6, bean.getUseWifi());
+			pstmt.setInt(7, bean.getUseNavi());
+			pstmt.setInt(8, bean.getUseBabySeat());
+			pstmt.setString(9, bean.getId());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			con.close();
+		}
+	}
+
+	// 예약 정보 확인
+	public List<ReserveCarViewBean> getAllReserve(String id) throws SQLException {
+		getConnection();
+		List<ReserveCarViewBean> beanList = new ArrayList<ReserveCarViewBean>();
+		try {
+			String sql = "";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ReserveCarViewBean bean = new ReserveCarViewBean();
+				bean.setName(rs.getString(2));
+				bean.setPrice(rs.getInt(4));
+				bean.setImg(rs.getString(7));
+				bean.setQty(rs.getInt(11));
+				bean.setdDay(rs.getInt(12));
+				bean.setrDay(rs.getString(13));
+				bean.setUseIn(rs.getInt(14));
+				bean.setUseWifi(rs.getInt(15));
+				bean.setUseNavi(rs.getInt(16));
+				bean.setUseBabySeat(rs.getInt(17));
+				beanList.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			con.close();
+		}
+		return beanList;
+	}
+
+	public void carRemoveReserve(String id, String rday) throws SQLException {
+		getConnection();
+		try {
+			String sql = "DELETE FROM CAR_RESERVE_INFO WHERE ID=? RDAY=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, rday);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			con.close();
+		}
 	}
 }

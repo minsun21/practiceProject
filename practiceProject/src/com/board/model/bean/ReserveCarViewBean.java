@@ -1,7 +1,10 @@
 package com.board.model.bean;
 
-public class ReserveBean {
-	private int no;
+public class ReserveCarViewBean {
+	
+	private String name;
+	private int price;
+	private String img;
 	private int qty;
 	private int dDay;
 	private String rDay;
@@ -9,20 +12,23 @@ public class ReserveBean {
 	private int useWifi;
 	private int useNavi;
 	private int useBabySeat;
-	private String id;
-	
-	
-	public String getId() {
-		return id;
+	public String getName() {
+		return name;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public int getNo() {
-		return no;
+	public int getPrice() {
+		return price;
 	}
-	public void setNo(int no) {
-		this.no = no;
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	public int getQty() {
 		return qty;
@@ -36,7 +42,6 @@ public class ReserveBean {
 	public void setdDay(int dDay) {
 		this.dDay = dDay;
 	}
-	
 	public String getrDay() {
 		return rDay;
 	}
@@ -67,6 +72,5 @@ public class ReserveBean {
 	public void setUseBabySeat(int useBabySeat) {
 		this.useBabySeat = useBabySeat;
 	}
-	
-	
+
 }
